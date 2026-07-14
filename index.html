@@ -18,8 +18,13 @@ radial-gradient(circle,rgba(32,231,255,.75) 1px,transparent 1.5px);
 background-size:47px 47px,79px 79px;animation:stars 34s linear infinite}
 @keyframes stars{to{background-position:0 94px,18px 181px}}
 .page{width:min(calc(100% - 18px),980px);margin:auto;padding:12px 0 42px}
-.hero{overflow:hidden;border-radius:23px;box-shadow:0 0 30px rgba(255,54,170,.38),0 0 68px rgba(32,231,255,.16)}
+.hero{overflow:hidden;opacity:0;transform:translateY(14px) scale(.985);
+animation:introHero 1s ease-out .08s forwards;border-radius:23px;box-shadow:0 0 30px rgba(255,54,170,.38),0 0 68px rgba(32,231,255,.16)}
 .hero img{display:block;width:100%}
+.panel{opacity:0;transform:translateY(18px);animation:introPanel .9s ease-out .55s forwards}
+.qr-section{opacity:0;transform:translateY(18px);animation:introPanel .9s ease-out .85s forwards}
+@keyframes introHero{to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes introPanel{to{opacity:1;transform:translateY(0)}}
 .panel,.qr-section{margin-top:18px;padding:28px 18px;text-align:center;border-radius:23px;background:rgba(9,4,24,.94)}
 .panel{border:2px solid var(--cyan);box-shadow:0 0 26px rgba(32,231,255,.3)}
 .qr-section{border:1px solid rgba(255,54,170,.65)}
@@ -59,7 +64,7 @@ display:grid;place-items:center}
 .cassette:focus-visible,.record:focus-visible{outline:3px solid #fff;outline-offset:5px}
 @media(max-width:760px){.countdown-row{grid-template-columns:1fr;gap:18px}.cassette{width:78px;height:50px}.record{width:78px;height:78px}}
 @media(max-width:560px){.page{width:min(calc(100% - 10px),980px);padding-top:5px}.panel{padding:21px 9px}.timer{gap:5px}.unit{padding:12px 1px 10px}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important}.hero,.panel,.qr-section{opacity:1!important;transform:none!important}}
 </style>
 </head>
 <body>
@@ -96,7 +101,7 @@ display:grid;place-items:center}
 <footer>© 2026 Wiedersehensparty der Antonianer</footer>
 </main>
 <audio id="partyMusic" loop preload="none">
-  <source src="https://opengameart.org/sites/default/files/Synth%20Wave_0.mp3" type="audio/mpeg">
+  <source src="synthwave-80s.mp3" type="audio/mpeg">
 </audio>
 <button class="music-control" id="musicControl" type="button" aria-label="Musik ein- oder ausschalten" title="Musik ein/aus">🔇</button>
 <script>
