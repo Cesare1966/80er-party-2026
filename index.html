@@ -30,13 +30,13 @@ h1{margin:0 0 7px;color:var(--pink);font-size:clamp(1.8rem,5vw,3rem);text-shadow
 .unit{padding:15px 3px 12px;border:1px solid rgba(32,231,255,.86);border-radius:15px;background:rgba(32,231,255,.065)}
 .number{display:block;color:var(--yellow);font-size:clamp(1.5rem,5.7vw,3rem);font-weight:800;line-height:1;text-shadow:0 0 11px rgba(255,232,90,.78)}
 .label{display:block;margin-top:8px;font-size:clamp(.62rem,1.7vw,.82rem);text-transform:uppercase}
-.cassette{position:relative;width:88px;height:57px;margin:auto;border:3px solid var(--cyan);border-radius:10px;background:linear-gradient(145deg,rgba(255,54,170,.82),rgba(74,20,137,.94));box-shadow:0 0 12px rgba(32,231,255,.88);animation:cassette 12s ease-in-out infinite}
+.cassette{position:relative;cursor:pointer;width:88px;height:57px;margin:auto;border:3px solid var(--cyan);border-radius:10px;background:linear-gradient(145deg,rgba(255,54,170,.82),rgba(74,20,137,.94));box-shadow:0 0 12px rgba(32,231,255,.88);animation:cassette 12s ease-in-out infinite}
 .cassette:before,.cassette:after{content:"";position:absolute;top:16px;width:16px;height:16px;border:3px dashed var(--yellow);border-radius:50%;background:#16031e;animation:reel 3.4s linear infinite}
 .cassette:before{left:17px} .cassette:after{right:17px;animation-direction:reverse}
 .cassette span{position:absolute;left:25px;right:25px;bottom:7px;height:9px;border:2px solid #fff;border-radius:4px}
 @keyframes cassette{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg) translateY(-3px)}}
 @keyframes reel{to{transform:rotate(360deg)}}
-.record{position:relative;width:88px;height:88px;margin:auto;border:2px solid rgba(255,255,255,.28);border-radius:50%;background:repeating-radial-gradient(circle at center,#080808 0 3px,#151515 4px 5px);box-shadow:0 0 13px rgba(255,54,170,.8);animation:record 14s linear infinite}
+.record{position:relative;cursor:pointer;width:88px;height:88px;margin:auto;border:2px solid rgba(255,255,255,.28);border-radius:50%;background:repeating-radial-gradient(circle at center,#080808 0 3px,#151515 4px 5px);box-shadow:0 0 13px rgba(255,54,170,.8);animation:record 14s linear infinite}
 .record:before{content:"";position:absolute;inset:29%;border-radius:50%;background:radial-gradient(circle,var(--cyan) 0 13%,var(--pink) 15% 100%)}
 .record:after{content:"";position:absolute;width:7px;height:7px;left:50%;top:50%;border-radius:50%;background:#fff;transform:translate(-50%,-50%)}
 @keyframes record{to{transform:rotate(360deg)}}
@@ -48,6 +48,15 @@ h1{margin:0 0 7px;color:var(--pink);font-size:clamp(1.8rem,5vw,3rem);text-shadow
 .qr-section h2{margin:0 0 8px;color:var(--cyan)} .qr-section p{margin:0 0 15px;color:#e9dcff}
 .qr{display:block;width:min(230px,70vw);margin:0 auto 15px;padding:10px;background:#fff;border-radius:15px}
 .final-message{margin:22px 0 0;color:#eadcff} footer{margin-top:18px;text-align:center;color:rgba(255,255,255,.68);font-size:.86rem}
+.music-control{
+position:fixed;right:16px;bottom:16px;z-index:20;width:54px;height:54px;
+border:2px solid var(--cyan);border-radius:50%;background:rgba(9,4,24,.96);
+color:#fff;font-size:25px;cursor:pointer;box-shadow:0 0 18px rgba(32,231,255,.55);
+display:grid;place-items:center}
+.music-control:hover,.music-control:focus-visible{transform:scale(1.06)}
+.music-control.playing{border-color:var(--pink);box-shadow:0 0 18px rgba(255,54,170,.65)}
+.music-hint{margin:10px 0 0;color:#d9faff;font-size:.9rem}
+.cassette:focus-visible,.record:focus-visible{outline:3px solid #fff;outline-offset:5px}
 @media(max-width:760px){.countdown-row{grid-template-columns:1fr;gap:18px}.cassette{width:78px;height:50px}.record{width:78px;height:78px}}
 @media(max-width:560px){.page{width:min(calc(100% - 10px),980px);padding-top:5px}.panel{padding:21px 9px}.timer{gap:5px}.unit{padding:12px 1px 10px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important}}
@@ -61,14 +70,14 @@ h1{margin:0 0 7px;color:var(--pink);font-size:clamp(1.8rem,5vw,3rem);text-shadow
 <h1>Noch bis zur Party</h1>
 <p class="subtitle">Der Countdown aktualisiert sich automatisch.</p>
 <div class="countdown-row">
-<div class="cassette" aria-hidden="true"><span></span></div>
+<div class="cassette" id="cassetteMusic" role="button" tabindex="0" aria-label="Musik starten oder pausieren"><span></span></div>
 <div class="timer" aria-live="polite">
 <div class="unit"><span class="number" id="days">–</span><span class="label">Tage</span></div>
 <div class="unit"><span class="number" id="hours">–</span><span class="label">Stunden</span></div>
 <div class="unit"><span class="number" id="minutes">–</span><span class="label">Minuten</span></div>
 <div class="unit"><span class="number" id="seconds">–</span><span class="label">Sekunden</span></div>
 </div>
-<div class="record" aria-hidden="true"></div>
+<div class="record" id="recordMusic" role="button" tabindex="0" aria-label="Musik starten oder pausieren"></div>
 </div>
 <p class="details"><strong>Freitag, 13. November 2026</strong><br>19:00 Uhr<br>St. Antonius · Rüdersdorfer Str. 45a · 10243 Berlin</p>
 <p class="quote">„Freunde von damals. Geschichten von heute. Ein Abend für die Ewigkeit.“</p>
@@ -76,7 +85,7 @@ h1{margin:0 0 7px;color:var(--pink);font-size:clamp(1.8rem,5vw,3rem);text-shadow
 <a class="button primary" id="calendarLink" href="#" download="wiedersehensparty-2026.ics">📅 Zum Kalender hinzufügen</a>
 <a class="button secondary" href="https://www.google.com/maps/search/?api=1&query=St.%20Antonius%2C%20R%C3%BCdersdorfer%20Str.%2045a%2C%2010243%20Berlin" target="_blank" rel="noopener">📍 Route planen</a>
 </div>
-<p class="final-message">Wir freuen uns auf einen unvergesslichen Abend mit euch.</p>
+<p class="final-message">Wir freuen uns auf einen unvergesslichen Abend mit euch.</p><p class="music-hint">Musik: Kassette oder Schallplatte anklicken.</p>
 </section>
 <section class="qr-section">
 <h2>Einladung teilen</h2>
@@ -86,11 +95,54 @@ h1{margin:0 0 7px;color:var(--pink);font-size:clamp(1.8rem,5vw,3rem);text-shadow
 </section>
 <footer>© 2026 Wiedersehensparty der Antonianer</footer>
 </main>
+<audio id="partyMusic" loop preload="none">
+  <source src="https://opengameart.org/sites/default/files/Synth%20Wave_0.mp3" type="audio/mpeg">
+</audio>
+<button class="music-control" id="musicControl" type="button" aria-label="Musik ein- oder ausschalten" title="Musik ein/aus">🔇</button>
 <script>
 const eventDate=new Date("2026-11-13T19:00:00+01:00").getTime();
 const f={days:document.getElementById("days"),hours:document.getElementById("hours"),minutes:document.getElementById("minutes"),seconds:document.getElementById("seconds")};
 function update(){const d=eventDate-Date.now();if(d<=0){document.querySelector("h1").textContent="Heute ist es so weit! 🎉";f.days.textContent="0";f.hours.textContent=f.minutes.textContent=f.seconds.textContent="00";return}const s=Math.floor(d/1000);f.days.textContent=Math.floor(s/86400);f.hours.textContent=String(Math.floor((s%86400)/3600)).padStart(2,"0");f.minutes.textContent=String(Math.floor((s%3600)/60)).padStart(2,"0");f.seconds.textContent=String(s%60).padStart(2,"0")}
 update();setInterval(update,1000);
+
+const music=document.getElementById("partyMusic");
+const musicControl=document.getElementById("musicControl");
+const cassetteMusic=document.getElementById("cassetteMusic");
+const recordMusic=document.getElementById("recordMusic");
+
+function refreshMusicIcon(){
+  const playing=!music.paused;
+  musicControl.textContent=playing?"🔊":"🔇";
+  musicControl.classList.toggle("playing",playing);
+  musicControl.setAttribute("aria-label",playing?"Musik ausschalten":"Musik einschalten");
+}
+
+async function toggleMusic(){
+  try{
+    if(music.paused){
+      await music.play();
+    }else{
+      music.pause();
+    }
+  }catch(error){
+    console.warn("Die Musik konnte nicht gestartet werden.",error);
+  }
+  refreshMusicIcon();
+}
+
+[cassetteMusic,recordMusic,musicControl].forEach(element=>{
+  element.addEventListener("click",toggleMusic);
+  element.addEventListener("keydown",event=>{
+    if(event.key==="Enter"||event.key===" "){
+      event.preventDefault();
+      toggleMusic();
+    }
+  });
+});
+music.addEventListener("play",refreshMusicIcon);
+music.addEventListener("pause",refreshMusicIcon);
+refreshMusicIcon();
+
 const ics=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Wiedersehensparty der Antonianer//DE","CALSCALE:GREGORIAN","METHOD:PUBLISH","BEGIN:VEVENT","UID:wiedersehensparty-2026@cesare1966.github.io","DTSTAMP:20260714T120000Z","DTSTART:20261113T180000Z","DTEND:20261113T220000Z","SUMMARY:Wiedersehensparty","LOCATION:St. Antonius, Rüdersdorfer Str. 45a, 10243 Berlin","DESCRIPTION:Freunde von damals. Geschichten von heute. Ein Abend für die Ewigkeit.","END:VEVENT","END:VCALENDAR"].join("\r\n");
 document.getElementById("calendarLink").href=URL.createObjectURL(new Blob([ics],{type:"text/calendar;charset=utf-8"}));
 </script>
